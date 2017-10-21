@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-//const autoprefixer = require('autoprefixer');
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -10,24 +9,23 @@ module.exports = {
         './src/client/index'
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'build'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },
     plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        //new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         rules: [
-          {
+            {
                 test: /(\.css|\.less)$/,
                 use: ['style-loader','css-loader', 'postcss-loader','less-loader'],
 
-          },
-          {
+            },
+            {
                 test: /\.js$/,
                 use: 'eslint-loader',
                 enforce: 'pre',
@@ -35,6 +33,7 @@ module.exports = {
                     path.resolve(__dirname, "src"),
                 ],
             },
+
             {
                 test: /\.js$/,
                 loader: 'react-hot-loader',
@@ -60,8 +59,27 @@ module.exports = {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
                 loader: 'file-loader'
             }
-
-
         ]
     }
-}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

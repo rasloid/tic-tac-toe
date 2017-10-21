@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import LoginScreen from '../components/LoginScreen';
+import Login from '../components/Login';
 import {setNickname, setNicknameNotification} from '../actions';
 
 const mapStateToProps = state => ({
@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
 const LoginScreenContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(LoginScreen);
+)(Login);
 
 export default LoginScreenContainer;
 

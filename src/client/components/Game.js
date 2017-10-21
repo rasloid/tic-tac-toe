@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Chat from './Chat';
 import PlayBox from './PlayBox';
 
-const GameScreen = ({exitGame,...props}) => (
+const Game = ({exitGame,...props}) => (
     <div className="game-screen">
         <PlayBox {...props}/>
         <Chat {...props}/>
@@ -11,8 +11,8 @@ const GameScreen = ({exitGame,...props}) => (
     </div>
 );
 
-GameScreen.propTypes ={
+Game.propTypes ={
     exitGame: PropTypes.func.isRequired
 };
 
-export default GameScreen;
+export default Game;

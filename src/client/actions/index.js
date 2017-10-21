@@ -13,7 +13,9 @@ export const END_GAME = 'END_GAME',
              CHANGE_SCREEN = 'CHANGE_SCREEN',
              PLAYFIELD_UPDATE = 'PLAYFIELD_UPDATE',
              RESUME_GAME = 'RESUME_GAME',
-             REJECT_NICKNAME = 'REJECT_NICKNAME';
+             REJECT_NICKNAME = 'REJECT_NICKNAME',
+             SHOW_INFO = 'SHOW_INFO',
+             HIDE_INFO = 'HIDE_INFO';
 
 export const endGame = (reason) =>({
    type: END_GAME,
@@ -23,6 +25,15 @@ export const endGame = (reason) =>({
 export const startGame = (data) =>({
     type: START_GAME,
     data
+});
+
+export const showInfo = (data) => ({
+    type: SHOW_INFO,
+    data
+});
+
+export const hideInfo = () => ({
+    type: HIDE_INFO
 });
 
 export const resumeGame = () => ({

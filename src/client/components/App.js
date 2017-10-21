@@ -1,17 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LoginScreenContainer from '../containers/LoginScreenContainer';
+import LoginContainer from '../containers/LoginContainer';
 import LobbyContainer from '../containers/LobbyContainer';
-import GameScreenContainer from '../containers/GameScreenContainer';
+import GameContainer from '../containers/GameContainer';
+import InfoScreen from '../components/InfoScreen';
 
-const App = ({screen}) => {
+const App = ({screen,...props}) => {
+
     switch(screen){
         case 'login':
-            return <LoginScreenContainer/>;
+            return (
+                <div>
+                    <InfoScreen {...props}/>
+                    <LoginContainer/>
+                </div>);
         case 'lobby':
-            return <LobbyContainer/>;
+            return (
+                <div>
+                    <InfoScreen {...props}/>
+                    <LobbyContainer/>
+                </div>);
         case 'game':
-            return <GameScreenContainer/>;
+            return (
+                <div>
+                    <InfoScreen {...props}/>
+                    <GameContainer/>
+                </div>);
     }
 };
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {endGame, resumeGameAccept, playFieldUpdate, newMessage, changeScreen} from '../actions'
-import GameScreen from '../components/GameScreen';
+import Game from '../components/Game';
 
 const mapStateToProps = (state) => ({
     ownNickname:state.login.nickname,
@@ -30,9 +30,9 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-const GameScreenContainer = connect(
+const GameContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(GameScreen);
+)(Game);
 
-export default GameScreenContainer;
+export default GameContainer;

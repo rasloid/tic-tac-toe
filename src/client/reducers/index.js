@@ -2,10 +2,10 @@ import { combineReducers } from 'redux'
 import game from './game';
 import lobby from './lobby';
 import login from './login';
-import screen from './screen'
+import display from './display'
 
 const AppReducer = combineReducers({
-    screen,
+    display,
     game,
     lobby,
     login
