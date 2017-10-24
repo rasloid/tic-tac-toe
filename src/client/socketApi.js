@@ -10,7 +10,7 @@ function connectToGameServer(store){
         .then(data => {
             console.log('Game server:',data.host);
             if(!data.host){
-                if(requestCount++ > 3){
+                if(requestCount++ > 2){
                     requestCount = 0;
                     return store.dispatch(actions.showInfo({
                         infoType:'503',
@@ -20,7 +20,7 @@ function connectToGameServer(store){
             }
             socket = io(data.host,{
                 autoConnect:false,
-                reconnectionAttempts:6,
+                reconnectionAttempts:4,
                 reconnectionDelay: 1000
             });
             socket
@@ -59,49 +59,47 @@ function addGameListeners(store){
     socket
         .on('set nickname status', status =>{
             if(status){
-                console.log(' socket set nickname status');
                 return store.dispatch(actions.changeScreen('lobby'));
             }
             store.dispatch(actions.rejectNickname());
             store.dispatch(actions.setNicknameNotification('this nickname is not available'));
         })
         .on('users list update', users =>{
-            console.log('socket users list update');
-            console.dir(users);
             store.dispatch(actions.usersListUpdate(users));
         })
         .on('game request', opponent =>{
-            console.log('socket game request');
+            console.log('game request');
             store.dispatch(actions.receiveRequest(opponent));
         })
         .on('game start', data =>{
-            console.log(' socket game start');
-            console.dir(data);
             store.dispatch(actions.hideInfo());
             store.dispatch(actions.startGame(data));
             store.dispatch(actions.changeScreen('game'));
         })
         .on('game update', data => {
             store.dispatch(actions.gameUpdate(data));
-            console.log('socket game update');
-            console.dir(data);
         })
         .on('exit game', reason => {
-            console.log('socket exit game');
+            console.log(reason);
             store.dispatch(actions.changeScreen('lobby'));
-            store.dispatch(actions.endGame(reason));
+            store.dispatch(actions.endGame());
+            store.dispatch(actions.showInfo({infoType:'notification',infoText:reason}))
         })
         .on('new chat message', message => {
-            console.log('socket new chat message');
-            store.dispatch(actions.newMessage(message));
+            store.dispatch(actions.receiveMessage(message));
         })
         .on('resume game', () => {
-            console.log('socket resume game');
             store.dispatch(actions.resumeGame())
         })
         .on('game_request_reject',()=>{
-            store.dispatch(actions.hideInfo());
+            store.dispatch(actions.showInfo({infoType: 'notification',infoText:'Game request Rejected'}));
         })
+        .on('notification',notification =>{
+            store.dispatch(actions.showInfo({infoType: 'notification',infoText: notification}));
+        })
+        .on('request_expired',()=>{
+            store.dispatch(actions.expireRequest());
+        });
 }
 
 export const socketApiMiddleware = (store) => next => action =>{
@@ -115,23 +113,22 @@ export const socketApiMiddleware = (store) => next => action =>{
             break;
         case actions.SEND_REQUEST:
             store.dispatch(actions.showInfo({infoType:'waiting',infoText:'Waiting for game confirm'}));
-            setTimeout(()=>{store.dispatch(actions.hideInfo())},20000);
             socket.emit('game request', action.opponent);
             break;
         case actions.SEND_RESPONSE:
             socket.emit('game request response', action.response);
             break;
         case actions.END_GAME:
-            socket.emit('exit game');
+            socket.emit('exit game',store.getState().login.nickname);
             break;
         case actions.PLAYFIELD_UPDATE:
             socket.emit('game update', action.data);
             break;
-        case actions.NEW_MESSAGE:
+        case actions.SEND_MESSAGE:
+            console.log(action.message);
             socket.emit('new chat message', action.message);
             break;
         case actions.RESUME_GAME_ACCEPT:
-            console.log('resume game accept');
             socket.emit('resume game');
             break;
     }

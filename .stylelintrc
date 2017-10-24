@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "block-no-empty": null,
+    "color-no-invalid-hex": true,
+    "comment-empty-line-before": null,
+    "declaration-colon-space-after": null,
+    "indentation": null,
+    "max-empty-lines": null,
+    "rule-empty-line-before": null,
+    "unit-whitelist": null
+  }
+}

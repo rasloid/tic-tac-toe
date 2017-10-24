@@ -46,8 +46,12 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /(\.css|\.less)$/,
-                use: ['style-loader','css-loader', 'postcss-loader','less-loader'],
+                test: /(\.css|\.pcss)$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader'
+                ],
 
             },
             {

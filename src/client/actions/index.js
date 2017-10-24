@@ -15,11 +15,14 @@ export const END_GAME = 'END_GAME',
              RESUME_GAME = 'RESUME_GAME',
              REJECT_NICKNAME = 'REJECT_NICKNAME',
              SHOW_INFO = 'SHOW_INFO',
-             HIDE_INFO = 'HIDE_INFO';
+             HIDE_INFO = 'HIDE_INFO',
+             SEND_MESSAGE = 'SEND_MESSAGE',
+             RECEIVE_MESSAGE = 'RECEIVE_MESSAGE',
+             REQUEST_EXPIRED = 'REQUEST_EXPIRED';
 
-export const endGame = (reason) =>({
-   type: END_GAME,
-   reason
+
+export const endGame = () =>({
+   type: END_GAME
 });
 
 export const startGame = (data) =>({
@@ -54,8 +57,13 @@ export const playFieldUpdate = (index,playerNum)=>({
     data:{index,playerNum}
 });
 
-export const newMessage = (message) =>({
-    type: NEW_MESSAGE,
+export const sendMessage = (message) =>({
+    type: SEND_MESSAGE,
+    message
+});
+
+export const receiveMessage = (message) =>({
+    type: RECEIVE_MESSAGE,
     message
 });
 
@@ -81,6 +89,10 @@ export const sendRequest = (opponent) =>({
 export const receiveRequest  = (opponent) =>({
     type: RECEIVE_REQUEST,
     opponent
+});
+
+export const expireRequest  = () =>({
+    type: REQUEST_EXPIRED
 });
 
 export const sendResponse = (response) =>({

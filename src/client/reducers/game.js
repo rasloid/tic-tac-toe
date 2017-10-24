@@ -3,9 +3,10 @@ import {
     END_GAME,
     GAME_UPDATE,
     RESUME_GAME_ACCEPT,
-    NEW_MESSAGE,
     PLAYFIELD_UPDATE,
-    RESUME_GAME
+    RESUME_GAME,
+    RECEIVE_MESSAGE,
+    SEND_MESSAGE
 } from '../actions';
 
 const getChatState = (state=[],action) => {
@@ -63,11 +64,18 @@ const game = (state=initialState, action) => {
                   resumeGameAccept: true
               };
 
-          case NEW_MESSAGE:
+          case RECEIVE_MESSAGE:
               return {
                   ...state,
                   chat: getChatState(state.chat, action)
               };
+
+          case SEND_MESSAGE:
+              return {
+                  ...state,
+                  chat: getChatState(state.chat, action)
+              };
+
 
           case RESUME_GAME:
                 return {

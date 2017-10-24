@@ -13,12 +13,12 @@ class UsersList extends Component{
         let {ownNickname, users,...props} = this.props;
         for(let user in users){
             if(user == ownNickname) continue;
-            listTemplate.push(<li key={uuidv4()} ><UsersListItem
+            listTemplate.push(<UsersListItem
                 nickname = {user}
                 isBusy={users[user]}
-                //key={uuidv4()}
+                key={uuidv4()}
                 {...props}
-            /></li>);
+            />);
         }
         return(
             <div className={'users-list'}>

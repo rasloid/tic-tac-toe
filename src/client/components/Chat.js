@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import ChatMessage from '../Components/ChatMessage';
-import {newMessageSound} from '../toneApi';
 import uuidv4 from 'uuid/v4';
 
 class Chat extends  Component{
@@ -18,18 +17,19 @@ class Chat extends  Component{
 
     componentDidUpdate() {
         this.scrollToBottom();
-        const {messages, ownNickname} = this.props;
-        if (messages.length && messages[-1].author != ownNickname) {
-            newMessageSound();
-        }
     }
 
     onSubmitHandler(e){
         e.preventDefault();
-        const textInput = e.target.elements.text;
+        const form = ReactDOM.findDOMNode(this.form);
+        const textInput = form.elements.text;
+        const text = textInput.value;
+        if(!text){
+            return;
+        }
         const message = {
             author:this.props.ownNickname,
-            text: textInput.value
+            text: text
         };
         const {sendNewMessage} = this.props;
         sendNewMessage(message);
@@ -39,11 +39,11 @@ class Chat extends  Component{
 
 
     render(){
-        const {messages, ownNickname} = this.props;
+        const {messages} = this.props;
         const messagesTemplate = [];
         for(let i = 0; i < messages.length; i++){
             let author = messages[i].author;
-            if(i  > 0 && ownNickname == messages[i-1].author){
+            if(i  > 0 && messages[i].author == messages[i-1].author){
                 author ='';
             }
             messagesTemplate.push(
@@ -62,14 +62,19 @@ class Chat extends  Component{
                          ref={(el) => { this.messagesEnd = el}}>
                     </div>
                 </div>
-                <form onSubmit={this.onSubmitHandler.bind(this)}>
-                    <input
-                        type='text'
+                <form
+                    onSubmit={this.onSubmitHandler.bind(this)}
+                    ref={(el) => { this.form = el}}>
+                    <textarea
                         name='text'
                         required
                         placeholder='Type a message'
+                        onKeyDown={e=>{if(e.key=='Enter'){this.onSubmitHandler(e)}}}
                     />
-                    <input type='submit' value='Send'/>
+                    <a
+                        className='a-btn'
+                        onClick={this.onSubmitHandler.bind(this)}
+                    >Send</a>
                 </form>
             </div>
         )

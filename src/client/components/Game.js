@@ -7,7 +7,7 @@ const Game = ({exitGame,...props}) => (
     <div className="game-screen">
         <PlayBox {...props}/>
         <Chat {...props}/>
-        <button onClick={()=>exitGame()}>Exit</button>
+        <a className='a-btn' onClick={()=>exitGame()}>Exit</a>
     </div>
 );
 

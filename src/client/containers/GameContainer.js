@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import {endGame, resumeGameAccept, playFieldUpdate, newMessage, changeScreen} from '../actions'
+import {endGame, resumeGameAccept, playFieldUpdate, sendMessage, changeScreen} from '../actions'
 import Game from '../components/Game';
 
 const mapStateToProps = (state) => ({
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(resumeGameAccept());
     },
     sendNewMessage:(message) => {
-        dispatch(newMessage(message));
+        dispatch(sendMessage(message));
     }
 });
 

@@ -5,7 +5,7 @@ import RequestScreen from './RequestScreen';
 
 const Lobby = ({ownNickname, haveReceivedRequestFrom,...props}) => (
     <div className="lobby">
-        <div><h2> You have joined as '{ownNickname}'</h2></div>
+        <div><h3> Nickname:{ownNickname}</h3></div>
         <UsersList ownNickname={ownNickname} {...props}/>
         {haveReceivedRequestFrom  ? <RequestScreen haveReceivedRequestFrom={haveReceivedRequestFrom} {...props}/> : ''}
     </div>

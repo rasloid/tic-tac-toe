@@ -6,7 +6,7 @@ import AppReducer from './reducers';
 import AppContainer from './containers/AppContainer';
 import socketApi, {socketApiMiddleware} from './socketApi';
 //import './styles/bootstrap/css/bootstrap.min.css';
-import './styles/style.less';
+import './styles/index.pcss';
 
 
 const store = createStore(

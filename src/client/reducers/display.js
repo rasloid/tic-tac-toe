@@ -2,8 +2,10 @@ import {CHANGE_SCREEN, SHOW_INFO, HIDE_INFO} from '../actions';
 
 const initialState = {
     screen: 'login',
+    info: true,
     infoType: 'waiting',
-    infoText: 'Connecting'
+    infoText: 'Connecting',
+    timer: null
 };
 
 const display = (state = initialState,action) => {
@@ -11,13 +13,12 @@ const display = (state = initialState,action) => {
         case CHANGE_SCREEN:
             return {...state, screen: action.screen};
         case SHOW_INFO:
-            return {...state, ...action.data};
+            return {...state, info: true, ...action.data};
         case HIDE_INFO:
-            return {...state, infoType: null, infoText: null};
+            return {...state, info: false};
     }
     return state;
 };
 
 export default display;
-
 

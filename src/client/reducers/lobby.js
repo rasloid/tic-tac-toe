@@ -1,4 +1,4 @@
-import {RECEIVE_REQUEST, USERS_LIST_UPDATE, SEND_REQUEST, SEND_RESPONSE} from '../actions';
+import {RECEIVE_REQUEST, USERS_LIST_UPDATE, SEND_REQUEST, SEND_RESPONSE,REQUEST_EXPIRED} from '../actions';
 
 const initialState = {
     users:{},
@@ -26,6 +26,12 @@ const lobby = (state = initialState, action) => {
                 sendRequestTo: action.opponent
             };
         case SEND_RESPONSE:
+            return{
+                ...state,
+                receivedRequestFrom: null,
+            };
+
+        case REQUEST_EXPIRED:
             return{
                 ...state,
                 receivedRequestFrom: null,

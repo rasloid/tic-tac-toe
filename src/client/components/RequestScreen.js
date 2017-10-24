@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const RequestScreen = ({haveReceivedRequestFrom,sendResponse}) => (
     <div className={'request-screen'}>
         <span>{haveReceivedRequestFrom} has sent you request</span>
-        <a onClick={()=>{sendResponse(true)}}>Confirm</a>
-        <a onClick={()=>{sendResponse(false)}}>Reject</a>
+        <a className='green a-btn' onClick={()=>{sendResponse(true)}}>Confirm</a>
+        <a className='red a-btn' onClick={()=>{sendResponse(false)}}>Reject</a>
     </div>
 );
 

@@ -7,14 +7,14 @@ const UsersManager = require('./RedisAPI/UsersManager');
 const GamesManager = require('./RedisAPI/GamesManager');
 
 
-module.exports = (port, redisOptions) => {
+module.exports = (address, port, redisOptions) => {
     const io = new Server(port);
     const pub = redis.createClient(redisOptions);
     const sub = redis.createClient(redisOptions);
 
     let p = new Promise((resolve, reject)=>{
-        let pub = redis.createClient(redisOptions);
-        let sub = redis.createClient(redisOptions);
+        const pub = redis.createClient(redisOptions);
+        const sub = redis.createClient(redisOptions);
         let counter = 0;
         pub.on('ready', ()=>{
             if(++counter === 2){resolve([pub,sub])}
@@ -52,8 +52,7 @@ module.exports = (port, redisOptions) => {
     });
 
     sub.on('message', (channel, msg) => {
-        redisMessagesHandler(channel, msg)
-            .catch(console.log);
+        redisMessagesHandler(channel, msg).catch(console.log);
     });
 
     async function newUserConnection(socket) {
@@ -121,10 +120,37 @@ module.exports = (port, redisOptions) => {
         return enterPlayGround(nickname, socket);
     }
 
-    /* async function restoreGame(userData){
-        let {nickname, gameId, opponentNickname,}
+    async function restoreGame(userData, socket){
+        let {nickname, gameId, opponentNickname} = userData;
+        let game = await games.getGameData(gameId);
+        let playerNum = game.player1 == nickname ? 1 : 2;
+        let opponentUserData = await users.getUserData(opponentNickname);
+        let opponentSocketId = opponentUserData.socketId;
+        let opponentSocket = io.sockets.connected[opponentSocketId];
+        socket.emit('game update', game);
+        socket.join(gameId);
+        if(playerNum === 1){
+            await listenToGameEvents(gameId, nickname, opponentNickname, socket);
+            if(opponentSocket){
+                await Promise.all([
+                    endGame(nickname, socket, gameId),
+                    endGame(opponentNickname, opponentSocket, gameId)]);
+            }else{
+                pub.publish(opponentSocketId, JSON.stringify({event: 'exit game'}));
+                await endGame(nickname, socket, gameId);
+            }
+            return enterPlayGround(nickname, socket);
+        }
+
+        await listenToGameEvents(gameId, nickname, opponentNickname, socket);
+        if(!opponentSocket){
+            pub.publish(opponentSocketId, JSON.stringify({event: 'exit game'}));
+        }
+        await endGame(nickname, socket, gameId);
+        return enterPlayGround(nickname, socket);
+
     }
-    */
+
     async function redisMessagesHandler(channel, msg){
         const data = JSON.parse(msg);
         const socket = io.sockets.connected[channel];
@@ -246,18 +272,16 @@ module.exports = (port, redisOptions) => {
     async function endGame(userNickname, socket, roomId) {
         try {
             await users.exitGame(userNickname);
-            socket.removeAllListeners(
-                'game request response',
+            ['game request response',
                 'game update',
                 'resume game',
                 'exit game',
-                'new chat message');
+                'new chat message']
+                .forEach(event => socket.removeAllListeners(event));
+
             socket.leave(roomId);
             games.deleteGame(roomId);
         }catch(e){
-            console.log('Error occured in \'endGame\' function. Probably, server trying to remove event listeners from\n' +
-                ' the socket which user had been reconnected and had got a new socket. It\'s not critical, listeners had\n' +
-                ' been removed in \'existingUserConnection\' function');
             console.log(e);
         }
     }
@@ -267,7 +291,7 @@ module.exports = (port, redisOptions) => {
             sockets.forEach((socket, i) => {
                 socket
                     .on('exit game', (nickname) => {
-                        socket.to(roomId).emit('exit game', `${nickname} left the game`);
+                        socket.to(roomId).emit('exit game', `${nickname} has left the game`);
                         res(roomId);
                     })
                     .on('disconnect', () => {
@@ -278,7 +302,6 @@ module.exports = (port, redisOptions) => {
                         socket.to(roomId).emit('new chat message', message);
                     })
                     .on('game update', async function (data) {
-                        console.log('GAME UPDATE EVENT');
                         let game;
                         try {
                             game = await games.nextTurn(roomId, data);
@@ -332,7 +355,10 @@ module.exports = (port, redisOptions) => {
 
     function listenForReqConfirm(socket, initiatorNickname) {
         return new Promise((res, rej) => {
-            const timer = setTimeout(()=>{res(false)},20000);
+            const timer = setTimeout(()=>{
+                socket.emit('request_expired');
+                res(false);
+            },20000);
             socket.once('game request response', status => {
                 clearTimeout(timer);
                 res(status);
@@ -371,12 +397,3 @@ module.exports = (port, redisOptions) => {
 
 };
 
-
-
-// /===============================================================
-function log(title, item) {
-    console.log(`==============${title}==================`);
-    console.dir(item);
-    console.log(`==============${title}==================`);
-
-}
