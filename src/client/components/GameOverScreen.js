@@ -30,7 +30,7 @@ const GameOverScreen = ({player,draw,winner, resumeGameAccept,resumeGameHandler}
 };
 
 GameOverScreen.propTypes = {
-    player:PropTypes.string.isRequired,
+    player:PropTypes.string,
     draw:PropTypes.bool,
     winner:PropTypes.string,
     resumeGameAccept:PropTypes.bool,

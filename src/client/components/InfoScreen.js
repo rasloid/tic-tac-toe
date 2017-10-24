@@ -2,8 +2,9 @@ import React from 'react';
 //import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Transition } from 'react-transition-group';
+import{duration, defaultStyle, transitionStyles } from '../animation.config';
 
-const InfoScreen = ({info, infoType, infoText, onClickHandler}) => {
+const InfoScreen = ({screen,infoType, infoText, onClickHandler, sendResponse}) => {
     let customClass = classNames({
         //'hide': !info,
         'info-screen': true,
@@ -11,22 +12,8 @@ const InfoScreen = ({info, infoType, infoText, onClickHandler}) => {
         'waiting': infoType == 'waiting'
     });
 
-    const duration = 800;
-
-    const defaultStyle = {
-        transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out `,
-        opacity: 0
-    };
-
-    const transitionStyles = {
-        entering: { opacity: 0},
-        entered: { opacity: 1},
-        exiting: { opacity: 1},
-        exited: { opacity: 0, transform: 'translateX(-110%)'}
-    };
-
     return(
-        <Transition in={info} timeout={duration}>
+        <Transition in={screen=='info'} timeout={duration}>
                 {state =>(
                     <div className={customClass} style={{
                         ...defaultStyle,
@@ -39,6 +26,13 @@ const InfoScreen = ({info, infoType, infoText, onClickHandler}) => {
                             }
                             {infoType === 'notification'
                                 ?<a className='a-btn' onClick={onClickHandler}>OK</a>
+                                :''
+                            }
+                            {infoType === 'request'
+                                ?   <div className='game-request-manager-bar'>
+                                        <a className='green a-btn' onClick={()=>{sendResponse(true)}}>Confirm</a>
+                                        <a className='red a-btn' onClick={()=>{sendResponse(false)}}>Reject</a>
+                                    </div>
                                 :''
                             }
                     </div>)

@@ -10,8 +10,8 @@ const RequestScreen = ({haveReceivedRequestFrom,sendResponse}) => (
 );
 
 RequestScreen.propTypes = {
-    haveReceivedRequestFrom: PropTypes.string.isRequired,
-    sendResponse: PropTypes.func.isRequired
+    haveReceivedRequestFrom: PropTypes.string,
+    sendResponse: PropTypes.func
 };
 
 export default RequestScreen;

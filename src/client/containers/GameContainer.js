@@ -3,6 +3,7 @@ import {endGame, resumeGameAccept, playFieldUpdate, sendMessage, changeScreen} f
 import Game from '../components/Game';
 
 const mapStateToProps = (state) => ({
+    screen: state.display.screen,
     ownNickname:state.login.nickname,
     player: state.game.player,
     turn: state.game.turn,

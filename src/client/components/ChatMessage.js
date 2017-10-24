@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ChatMessage = ({author,text}) => (
-    <div className='message'>
+const ChatMessage = ({isOwn,author,text}) => (
+    <div className={'message ' + (isOwn ? 'own' : '')}>
         <div className='author'>
             {author}
         </div>

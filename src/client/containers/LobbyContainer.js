@@ -6,7 +6,8 @@ const mapStateToProps = state => ({
     ownNickname: state.login.nickname,
     haveReceivedRequestFrom: state.lobby.receivedRequestFrom,
     users: state.lobby.users,
-    haveSentRequestTo: state.lobby.sentRequestTo
+    haveSentRequestTo: state.lobby.sentRequestTo,
+    screen: state.display.screen,
 });
 
 const mapDispatchToProps = dispatch => ({

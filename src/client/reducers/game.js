@@ -1,6 +1,5 @@
 import {
     START_GAME,
-    END_GAME,
     GAME_UPDATE,
     RESUME_GAME_ACCEPT,
     PLAYFIELD_UPDATE,
@@ -39,11 +38,9 @@ const game = (state=initialState, action) => {
           case START_GAME:
               return {
                   ...state,
-                  ...action.data
+                  ...action.data,
+                  chat: getChatState()
               };
-
-          case END_GAME:
-              return initialState;
 
           case GAME_UPDATE:
               return {

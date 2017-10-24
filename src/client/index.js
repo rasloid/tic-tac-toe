@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import AppReducer from './reducers';
-import AppContainer from './containers/AppContainer';
+import App from './components/App';
 import socketApi, {socketApiMiddleware} from './socketApi';
 //import './styles/bootstrap/css/bootstrap.min.css';
 import './styles/index.pcss';
@@ -18,7 +18,7 @@ socketApi(store);
 
 render(
     <Provider store={store}>
-        <AppContainer/>
+        <App/>
     </Provider>,
     document.getElementById('root')
 );

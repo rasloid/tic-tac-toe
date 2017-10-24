@@ -39,10 +39,11 @@ class Chat extends  Component{
 
 
     render(){
-        const {messages} = this.props;
+        const {ownNickname, messages} = this.props;
         const messagesTemplate = [];
         for(let i = 0; i < messages.length; i++){
             let author = messages[i].author;
+            let isOwn = ownNickname == author;
             if(i  > 0 && messages[i].author == messages[i-1].author){
                 author ='';
             }
@@ -50,6 +51,7 @@ class Chat extends  Component{
                 <ChatMessage
                     author = {author}
                     text = {messages[i].text}
+                    isOwn = {isOwn}
                     key = {uuidv4()}
                 />
             );
@@ -71,10 +73,6 @@ class Chat extends  Component{
                         placeholder='Type a message'
                         onKeyDown={e=>{if(e.key=='Enter'){this.onSubmitHandler(e)}}}
                     />
-                    <a
-                        className='a-btn'
-                        onClick={this.onSubmitHandler.bind(this)}
-                    >Send</a>
                 </form>
             </div>
         )
@@ -82,9 +80,9 @@ class Chat extends  Component{
 }
 
 Chat.propTypes ={
-    messages: PropTypes.array.isRequired,
-    ownNickname: PropTypes.string.isRequired,
-    sendNewMessage: PropTypes.func.isRequired
+    messages: PropTypes.array,
+    ownNickname: PropTypes.string,
+    sendNewMessage: PropTypes.func
 };
 
 export default Chat;
@@ -92,7 +90,12 @@ export default Chat;
 
 
 
-
+/*
+ <a
+ className='a-btn'
+ onClick={this.onSubmitHandler.bind(this)}
+ >Send</a>
+ */
 
 
 

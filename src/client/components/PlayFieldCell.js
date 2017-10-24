@@ -12,9 +12,9 @@ const PlayFieldCell = ({cellState, index,playerNum, onClickHandler}) =>(
 );
 
 PlayFieldCell.propTypes = {
-    cellState: PropTypes.number.isRequired,
-    index: PropTypes.number.isRequired,
-    onClickHandler: PropTypes.func.isRequired
+    cellState: PropTypes.number,
+    index: PropTypes.number,
+    onClickHandler: PropTypes.func
 };
 
 export default PlayFieldCell;

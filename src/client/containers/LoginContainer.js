@@ -3,7 +3,8 @@ import Login from '../components/Login';
 import {setNickname, setNicknameNotification} from '../actions';
 
 const mapStateToProps = state => ({
-    setNicknameNotification: state.login.setNicknameNotification
+    setNicknameNotification: state.login.setNicknameNotification,
+    screen: state.display.screen,
 });
 const mapDispatchToProps = dispatch => ({
     setNickname: nickname => {dispatch(setNickname(nickname))},

@@ -1,37 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import LoginContainer from '../containers/LoginContainer';
 import LobbyContainer from '../containers/LobbyContainer';
 import GameContainer from '../containers/GameContainer';
-import InfoScreen from '../components/InfoScreen';
-//import  Transition from 'react-transition-group/Transition';
+import InfoContainer from '../containers/InfoContainer';
 
-const App = ({screen,...props}) => {
-
-    switch(screen){
-        case 'login':
-            return (
-                <div>
-                    <InfoScreen {...props}/>
-                    <LoginContainer/>
-                </div>);
-        case 'lobby':
-            return (
-                <div>
-                    <InfoScreen {...props}/>
-                    <LobbyContainer/>
-                </div>);
-        case 'game':
-            return (
-                <div>
-                    <InfoScreen {...props}/>
-                    <GameContainer/>
-                </div>);
-    }
+const App = () => {
+    return (
+        <div>
+            <InfoContainer/>
+            <LoginContainer/>
+            <LobbyContainer/>
+            <GameContainer/>
+        </div>);
 };
-
-App.propTypes = {
-    screen: PropTypes.string.isRequired
-};
-
 export default App;

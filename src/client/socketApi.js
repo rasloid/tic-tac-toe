@@ -81,9 +81,7 @@ function addGameListeners(store){
         })
         .on('exit game', reason => {
             console.log(reason);
-            store.dispatch(actions.changeScreen('lobby'));
-            store.dispatch(actions.endGame());
-            store.dispatch(actions.showInfo({infoType:'notification',infoText:reason}))
+            store.dispatch(actions.showInfo({infoType:'notification',infoText:reason, nextScreen: 'lobby'}));
         })
         .on('new chat message', message => {
             store.dispatch(actions.receiveMessage(message));

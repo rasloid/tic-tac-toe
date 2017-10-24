@@ -26,6 +26,7 @@
     }
 }
 
+
 * {
     user-select: none;
     box-sizing: border-box;
@@ -34,10 +35,9 @@
 
 html, body {
     font-family:sans-serif;
-    height: 100%;
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: 15px;
     color: black;
     background: var(--main-color);
 }
@@ -48,18 +48,18 @@ html, body {
 }
 
 .green{
-    background-color: rgb(112, 150, 129);
+    background-color: rgb(112, 150, 129) !important;
 }
 .red{
-    background-color: rgb(140, 99, 98);
+    background-color: rgb(140, 99, 98) !important;
 }
-
 
 a.a-btn{
     display: inline-block;
     color: black;
     cursor: pointer;
     text-decoration: none;
+    text-align: center;
 
     &:hover{
         box-shadow: inset 0 5em 0 rgba(255, 255, 255, 0.2);
@@ -71,12 +71,15 @@ a.a-btn{
 
 }
 
-
-
-.users-list {
+.lobby {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    //align-items: center;
     padding-top: 2rem;
 
     & ul {
@@ -129,39 +132,16 @@ a.a-btn{
 
 }
 
-.request-screen{
-    display:flex;
-    flex-direction:column;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    background: rgba(197, 193, 194, 0.8);
-    @apply --block-screen;
-
-    & a{
-        cursor: pointer;
-        padding: 0.3rem 0.8rem;
-        margin-top: 1rem;
-        text-decoration: none;
-        border-radius: 1rem;
-
-    }
-}
-
-
-
 .start-page{
+    position: absolute;
+    top:0;
+    left:0;
     display: flex;
     justify-content: center;
     align-items: center;
     width:100%;
     height: 100%;
 
-}
-
-.start-page form{
-    margin-top: 40vh;
 }
 
 .start-page input {
@@ -184,14 +164,18 @@ a.a-btn{
 
 
 .game-screen{
+    position: absolute;
+    top:0;
+    left:0;
     display: flex;
     justify-content: space-around;
     align-items: center;
     width:100%;
     height: 100%;
-    margin-top: 2rem;
 
     & a.a-btn{
+        align-self: flex-start;
+        margin-top: 1rem;
         background-color: rgba(206, 206, 218, 0.8);
         padding: 0.3rem 1rem;
         min-width: 4rem;
@@ -231,11 +215,10 @@ a.a-btn{
     height: 6rem;
     margin-right: 0.3rem;
     background: var(--main-color);
-    transition-duration: 1s;
     text-align: center;
-    transition: 2s;
 
 }
+
 
 .player1::before{
     content: '';
@@ -244,8 +227,10 @@ a.a-btn{
     top:0.5rem;
     width:80%;
     height:80%;
-    background-image: linear-gradient(to top right, transparent 47%, black 47%, black 53%, transparent 53% ),
-    linear-gradient(to bottom right, transparent 47%, black 47%, black 53%, transparent 53% );
+    transform: scale(1);
+    background-image:
+            linear-gradient(to top right, transparent 47%, black 47%, black 53%, transparent 53% ),
+            linear-gradient(to bottom right, transparent 47%, black 47%, black 53%, transparent 53% );
 
 }
 
@@ -258,6 +243,7 @@ a.a-btn{
     height:80%;
     border: 0.4rem solid black;
     border-radius: 50%;
+    transform: scale(1);
 }
 
 .player-turn-status{
@@ -307,15 +293,25 @@ a.a-btn{
 
 .chat{
     & .messages{
-        width: 15rem;
-        height: 400px;
-        overflow-y: scroll;
+        min-width: 12rem;
+        height: 17rem ;
+        padding: 0.5rem;
         background: rgba(255, 255, 255, 0.4);
+        border-radius: 0.5rem;
+        overflow: hidden;
     }
 
     & .message{
         max-width: 15rem;
         white-space: pre-wrap;
+
+        &.own{
+            text-align: right;
+        }
+
+        & .text{
+            padding: 0 0.5rem;
+        }
     }
 
     & .author{
@@ -338,12 +334,19 @@ a.a-btn{
         & textarea {
             display: inline-block;
             background-color: rgba(206, 206, 218, 0.43);
-            width: 10rem;
-            height: 2rem;
+            width: 100%;
+            padding: 0.3rem;
             resize: none;
             border: none;
+            border-radius: 0.5rem;
             white-space: pre-wrap;
+            overflow: hidden;
+            box-sizing: content-box;
+            font-size: 1rem;
 
+            &:focus{
+                outline:none;
+            }
         }
     }
 }
@@ -370,6 +373,18 @@ a.a-btn{
         margin-top: 2rem;
         border-radius: 1rem;
         background-color: rgba(206, 206, 218, 0.43);
+    }
+
+    & .game-request-manager-bar {
+        display: flex;
+        flex-direction: column;
+        & a{
+            cursor: pointer;
+            padding: 0.3rem 0.8rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 1rem;
+        }
     }
 }
 

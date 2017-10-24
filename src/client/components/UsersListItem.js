@@ -14,9 +14,9 @@ const UsersListItem = ({nickname,isBusy,sendRequest}) => (
     </li>);
 
 UsersListItem.propTypes = {
-    nickname: PropTypes.string.isRequired,
+    nickname: PropTypes.string,
     isPlaying: PropTypes.bool,
-    sendRequest: PropTypes.func.isRequired
+    sendRequest: PropTypes.func
 };
 
 export default UsersListItem;

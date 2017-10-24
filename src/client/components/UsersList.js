@@ -31,7 +31,7 @@ class UsersList extends Component{
 }
 
 UsersList.propTypes ={
-    ownNickname: PropTypes.string.isRequired,
+    ownNickname: PropTypes.string,
     users: PropTypes.object
 };
 export default UsersList;

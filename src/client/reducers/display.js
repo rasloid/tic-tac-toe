@@ -1,21 +1,20 @@
-import {CHANGE_SCREEN, SHOW_INFO, HIDE_INFO} from '../actions';
+import {CHANGE_SCREEN, SHOW_INFO, HIDE_INFO, RECEIVE_REQUEST} from '../actions';
 
 const initialState = {
-    screen: 'login',
-    info: true,
-    infoType: 'waiting',
-    infoText: 'Connecting',
-    timer: null
+    screen: 'info',
+    prevScreen: 'login'
 };
 
 const display = (state = initialState,action) => {
     switch(action.type) {
         case CHANGE_SCREEN:
-            return {...state, screen: action.screen};
+            return {screen: action.screen, prevScreen: state.screen};
         case SHOW_INFO:
-            return {...state, info: true, ...action.data};
+            return {screen:'info', prevScreen: action.data.nextScreen || (state.screen == 'info' ? state.prevScreen : state.screen)};
         case HIDE_INFO:
-            return {...state, info: false};
+            return {...state, screen: state.prevScreen};
+        case RECEIVE_REQUEST:
+            return {screen:'info', prevScreen: (state.screen == 'info' ? state.prevScreen : state.screen)};
     }
     return state;
 };

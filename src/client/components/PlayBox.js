@@ -22,9 +22,9 @@ const PlayBox = ({player,turn,opponentNickname,draw,winner,...props}) => (
 );
 
 PlayBox.propTypes = {
-    player: PropTypes.string.isRequired,
-    turn: PropTypes.string.isRequired,
-    opponentNickname: PropTypes.string.isRequired,
+    player: PropTypes.string,
+    turn: PropTypes.string,
+    opponentNickname: PropTypes.string,
     draw: PropTypes.bool,
     winner: PropTypes.string
 };

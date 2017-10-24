@@ -13,7 +13,8 @@ class PlayField extends Component{
         let playFieldTemplate = [];
         for (let i = 0; i < 3; i++) {
             for (let j = i * 3; j < i * 3 + 3; j++) {
-                const playerNum = +player.slice(-1);
+                let playerNum;
+                if(player){playerNum = +player.slice(-1)}
                 playFieldTemplate.push(
                     <PlayFieldCell
                         cellState={playFieldState[j]}
@@ -35,7 +36,7 @@ class PlayField extends Component{
 }
 
 PlayField.propTypes ={
-    playFieldState: PropTypes.array.isRequired
+    playFieldState: PropTypes.array
 };
 
 export default PlayField;
