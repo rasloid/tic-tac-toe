@@ -90,10 +90,12 @@ module.exports = (address, port, redisOptions) => {
             .on('disconnect', () => {
                 users.removeUser(nickname).catch(console.log);
             });
+
         let {gameId, opponentNickname} = userData;
         if (gameId && opponentNickname){
            return restoreGame(userData, socket, 1).catch(console.log);
         }
+
         await users.clearGameRequest(nickname);
         return enterPlayGround(nickname, socket);
     }
