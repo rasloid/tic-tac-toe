@@ -68,7 +68,7 @@ function addGameListeners(store){
             store.dispatch(actions.usersListUpdate(users));
         })
         .on('game request', opponent =>{
-            console.log('game request');
+            console.log('game request event');
             store.dispatch(actions.receiveRequest(opponent));
         })
         .on('game start', data =>{
@@ -115,6 +115,7 @@ export const socketApiMiddleware = (store) => next => action =>{
         case actions.SEND_REQUEST:
             store.dispatch(actions.showInfo({infoType:'waiting',infoText:'Waiting for game confirm'}));
             socket.emit('game request', action.opponent);
+            console.log('game request emitted');
             break;
         case actions.SEND_RESPONSE:
             socket.emit('game request response', action.response);

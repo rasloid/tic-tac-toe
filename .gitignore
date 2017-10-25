@@ -1,9 +1,7 @@
 node_modules/
-build/
 coverage/
 .eslintcache
 npm-debug.log
 .idea
-backup
 .idea
 package-lock.json

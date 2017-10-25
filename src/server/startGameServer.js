@@ -20,7 +20,6 @@ let options = {
       'Content-Type': 'application/json'
     },
     body: body
-
 };
 
 request(options,(err,response,body) => {

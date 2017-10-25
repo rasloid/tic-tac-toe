@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 const UsersManager = require('./RedisAPI/UsersManager');
 const GamesManager = require('./RedisAPI/GamesManager');
-const ServersManager = require(',/RedisAPI/ServersManager');
+const ServersManager = require('./RedisAPI/ServersManager');
 
 
 module.exports = (address, port, redisOptions) => {
@@ -31,7 +31,7 @@ module.exports = (address, port, redisOptions) => {
 
     const users = new UsersManager(redisOptions, serverName);
     const games = new GamesManager(redisOptions);
-    const servers = new ServersManager(redisOpts);
+    const servers = new ServersManager(redisOptions);
 
     console.log('Game server started');
 
@@ -192,6 +192,8 @@ module.exports = (address, port, redisOptions) => {
             console.log(e);
             return enterPlayGround(userNickname, socket);
         }
+
+        console.log(`${userNickname} has sent game request to ${opponentNickname}`);
 
         await users.gameRequest(userNickname, opponentNickname);
 
