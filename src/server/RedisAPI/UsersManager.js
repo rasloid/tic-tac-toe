@@ -2,7 +2,8 @@ const ioe = require('socket.io-emitter');
 const redis = require('redis-promisify');
 
 class UsersManager{
-    constructor(redisOptions){
+    constructor(redisOptions, serverName){
+        this.serverName = serverName;
         let p = new Promise((res, rej)=>{
             this.db = redis.createClient(redisOptions);
             this.db.on('ready', ()=>res());
@@ -21,6 +22,7 @@ class UsersManager{
             await Promise.all([
                 this.db.hsetAsync(`users:${nickname}`, 'nickname', nickname),
                 this.db.hsetAsync(`users:${nickname}`, 'socketId', socketId),
+                this.db.hsetAsync(`users:${nickname}`, 'serverName', this.serverName),
                 this.db.hsetAsync('users list', nickname, '')]);
             this.propagateUpdates();
             return nickname;

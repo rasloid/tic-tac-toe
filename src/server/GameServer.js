@@ -5,9 +5,11 @@ const uuidv4 = require('uuid/v4');
 
 const UsersManager = require('./RedisAPI/UsersManager');
 const GamesManager = require('./RedisAPI/GamesManager');
+const ServersManager = require(',/RedisAPI/ServersManager');
 
 
 module.exports = (address, port, redisOptions) => {
+    const serverName = `${address}:${port}`;
     const io = new Server(port);
     const pub = redis.createClient(redisOptions);
     const sub = redis.createClient(redisOptions);
@@ -27,8 +29,9 @@ module.exports = (address, port, redisOptions) => {
         io.adapter(adapter({ pubClient: pub, subClient: sub}));
     }).catch(console.log);
 
-    const users = new UsersManager(redisOptions);
+    const users = new UsersManager(redisOptions, serverName);
     const games = new GamesManager(redisOptions);
+    const servers = new ServersManager(redisOpts);
 
     console.log('Game server started');
 
@@ -78,53 +81,39 @@ module.exports = (address, port, redisOptions) => {
             socket.emit('reconnection_fail');
             return newUserConnection(socket);
         }
+        const newSocketId = socket.id;
+        sub.subscribe(newSocketId);
+        await users.setUserData(nickname, {serverName: serverName, socketId: newSocketId});
         socket
             .join('authorized_users_room')
             .emit('reconnection_success')
             .on('disconnect', () => {
-                users.removeUser(nickname);
+                users.removeUser(nickname).catch(console.log);
             });
         let {gameId, opponentNickname} = userData;
-        const newSocketId = socket.id;
-        users.setUserData(nickname, {socketId: newSocketId});
-        sub.subscribe(newSocketId);
         if (gameId && opponentNickname){
-            let game = await games.getGameData(gameId);
-            let playerNum = game.player1 == nickname ? 1 : 2;
-            let opponentUserData = await users.getUserData(opponentNickname);
-            let opponentSocketId = opponentUserData.socketId;
-            let opponentSocket = io.sockets.connected[opponentSocketId];
-            socket.emit('game update', game);
-            socket.join(gameId);
-            if(playerNum === 1){
-                await listenToGameEvents(gameId, nickname, opponentNickname, socket);
-                if(opponentSocket){
-                    await Promise.all([
-                        endGame(nickname, socket, gameId),
-                        endGame(opponentNickname, opponentSocket, gameId)]);
-                }else{
-                    pub.publish(opponentSocketId, JSON.stringify({event: 'exit game'}));
-                    await endGame(nickname, socket, gameId);
-                }
-                return enterPlayGround(nickname, socket);
-            }
-
-            await listenToGameEvents(gameId, nickname, opponentNickname, socket);
-            if(!opponentSocket){
-                pub.publish(opponentSocketId, JSON.stringify({event: 'exit game'}));
-            }
-            await endGame(nickname, socket, gameId);
-            return enterPlayGround(nickname, socket);
+           return restoreGame(userData, socket, 1).catch(console.log);
         }
         await users.clearGameRequest(nickname);
         return enterPlayGround(nickname, socket);
     }
 
-    async function restoreGame(userData, socket){
+    async function restoreGame(userData, socket, attemptsCount){
         let {nickname, gameId, opponentNickname} = userData;
         let game = await games.getGameData(gameId);
         let playerNum = game.player1 == nickname ? 1 : 2;
         let opponentUserData = await users.getUserData(opponentNickname);
+        let aliveServers = await servers.getServers();
+
+        if(aliveServers.indexOf(opponentUserData.serverName) == -1){
+            if(attemptsCount > 3){
+                await users.removeUser(opponentNickname);
+                await endGame(nickname, socket, gameId);
+                return enterPlayGround(nickname, socket);
+            }
+            return setTimeout(()=>{restoreGame(userData, socket, ++attemptsCount).catch(console.log)},2000);
+        }
+
         let opponentSocketId = opponentUserData.socketId;
         let opponentSocket = io.sockets.connected[opponentSocketId];
         socket.emit('game update', game);
@@ -229,7 +218,6 @@ module.exports = (address, port, redisOptions) => {
 
         return enterPlayGround(userNickname, socket);
     }
-
 
     async function startGame(userNickname, opponentNickname, socket, opponentSocketValue, separateServers) {
         const gameId = uuidv4();

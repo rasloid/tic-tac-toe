@@ -97,6 +97,9 @@ function addGameListeners(store){
         })
         .on('request_expired',()=>{
             store.dispatch(actions.expireRequest());
+        })
+        .on('reconnection_fail',() => {
+            store.dispatch(actions.changeScreen('login'));
         });
 }
 
