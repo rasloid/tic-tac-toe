@@ -6,13 +6,10 @@ const server = require('http').createServer(app);
 const args = require('minimist')(process.argv);
 const ServersManager = require('./RedisAPI/ServersManager');
 let password = args['pass'] || 'secret';
-let port = args['port'] || 3005;
 
-let redisOpts = {
-    host: args['redishost'] || 'localhost',
-    port: args['redisport'] || '6379',
-    auth_pass: args['redispass'] || 'lrm234kjhe32wjehr34wkjhr34hwer4h'
-};
+let port = process.env.PORT || args['port'] || 3005;
+
+const redisOpts = require('../../redis.config');
 
 const servers = new ServersManager(redisOpts);
 
