@@ -1,15 +1,11 @@
 const express = require('express');
-const args = require('minimist')(process.argv);
 const app = express();
 const server = require('http').createServer(app);
 const expressStaticGzip = require('express-static-gzip');
-let port = 80;
+let port = process.env.PORT || 80;
+console.log(port);
 const LoadBalancer = require('./src/server/LoadBalancer');
-const redisOpts = {
-    host: args['redishost'] || 'localhost',
-    port: args['redisport'] || 6379,
-    password: args['redispass'] || 'lrm234kjhe32wjehr34wkjhr34hwer4h'
-};
+const redisOpts = require('./redis.config');
 const loadBalancer = new LoadBalancer(redisOpts);
 
 
