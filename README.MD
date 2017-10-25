@@ -1,3 +1,5 @@
+Multiplayer tic-tac-toe game.
+
 This is a study project. Things I'm going to learn while implementing this are: react/redux, postcss, webpack,
 socket.io, redis, node.js application scalling, pub/sub pattern.
 
