@@ -42,6 +42,7 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8
         })
+
     ],
     module: {
         rules: [
@@ -59,14 +60,7 @@ module.exports = {
                 loader: 'babel-loader',
                 include: [
                     path.resolve(__dirname, 'src')
-                ],
-                options:{
-                    plugins:[
-                        'transform-react-remove-prop-types',
-                        'transform-react-constant-elements',
-                        'transform-react-inline-elements'
-                    ]
-                }
+                ]
 
             },
             {
