@@ -20,7 +20,7 @@ class Login extends Component{
         return(
             <Transition in={screen=='login'} timeout={duration}>
                     {state => (
-                    <div className='start-page' style={{...defaultStyle, ...transitionStyles[state]
+                    <div className='login' style={{...defaultStyle, ...transitionStyles[state]
                     }}>
                         <form onSubmit={this.onSubmitHandler.bind(this)}>
                             <input
