@@ -1,0 +1,124 @@
+.game{
+    position: absolute;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width:100%;
+    height: 100%;
+
+    & a.a-btn{
+        align-self: flex-start;
+        margin-top: 1rem;
+        background-color: rgba(206, 206, 218, 0.8);
+        padding: 0.3rem 1rem;
+        min-width: 4rem;
+        border-radius: 2rem;
+        text-align: center;
+    }
+}
+
+.play-box{
+    position: relative;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.play-field{
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    padding: 0.8rem 0.5rem 0.5rem 0.6rem;
+    overflow: hidden;
+    background-color: black;
+    background-clip: content-box;
+    box-shadow: inset 0 0 0 1rem var(--main-color);
+}
+
+.play-field .cell{
+    display: inline-block;
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    margin-right: 0.3rem;
+    background: var(--main-color);
+    text-align: center;
+
+}
+
+
+.player1::before{
+    content: '';
+    position: absolute;
+    left:0.5rem;
+    top:0.5rem;
+    width:80%;
+    height:80%;
+    transform: scale(1);
+    background-image:
+            linear-gradient(to top right, transparent 47%, black 47%, black 53%, transparent 53% ),
+            linear-gradient(to bottom right, transparent 47%, black 47%, black 53%, transparent 53% );
+
+}
+
+.player2::before{
+    content: '';
+    position: absolute;
+    left:0.2rem;
+    top:0.2rem;
+    width:80%;
+    height:80%;
+    border: 0.4rem solid black;
+    border-radius: 50%;
+    transform: scale(1);
+}
+
+.player-turn-status{
+    height: 1.1rem;
+}
+
+.game-over-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @apply --block-screen;
+
+    & .game-result{
+        padding: 0 1rem;
+        font-size: 3rem;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 1rem;
+
+        &.red{
+            background: rgba(118, 20, 9, 0.73);
+        }
+        &.green{
+            background: rgba(112, 150, 129, 0.76);
+        }
+    }
+    & .resume-game-control{
+        position: relative;
+        height: 3rem;
+        margin-top: 2rem;
+
+        & a{
+
+        }
+    }
+
+    & .spinner{
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        border: 0.4rem solid white;
+        @apply --spinner;
+    }
+}

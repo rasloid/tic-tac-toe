@@ -1,4 +1,8 @@
 @import './chat.pcss';
+@import './info-screen.pcss';
+@import './lobby.pcss';
+@import './login.pcss';
+@import './game.pcss';
 
 :root{
     --main-color: #57576a;
@@ -27,7 +31,6 @@
         transform: rotate(360deg);
     }
 }
-
 
 * {
     user-select: none;
@@ -74,271 +77,13 @@ a.a-btn{
     &:active{
         transform: scale(0.95);
     }
-
 }
-
-.lobby {
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height:100%;
-    display: flex;
-    justify-content: center;
-    //align-items: center;
-    padding-top: 2rem;
-
-    & ul {
-        display: table;
-        list-style: none;
-        width: 20rem;
-
-        & li {
-            display: table-row;
-            background: rgba(255, 255, 255, 0.1);
-            padding-bottom: 0.5rem;
-            cursor: default;
-            margin-bottom: 0.5rem;
-        }
-
-        & li:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        & li > div:nth-child(2) {
-            display: table-cell;
-            min-width: 5rem;
-            text-align: center;
-            vertical-align: middle;
-        }
-    }
-
-    & .nickname {
-        font-size: 1.5rem;
-        margin-left: 2rem;
-    }
-
-    & .info {
-        margin-left: 0.4rem;
-        font-size: 0.7rem;
-        font-style: italic;
-    }
-
-    & .info a {
-        padding: 0.1rem 0.3rem;
-        border-radius: 0.3rem;
-        background: rgba(255, 255, 255, 0.2);
-        font-style: normal;
-        text-decoration: none;
-
-        & :hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-    }
-
-}
-
-.start-page{
-    position: absolute;
-    top:0;
-    left:0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    height: 100%;
-
-    & form{
-        text-align: center;
-
-        & input {
-            border: none;
-            outline: none;
-            background-color: transparent;
-            padding-bottom: 15px;
-            text-align: center;
-            width: 25rem;
-            font-size: 2rem;
-        }
-    }
-}
-
-.set-name-notifier {
-    height: 2rem;
-    width: 30rem;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.3);
-
-}
-
-
-.game-screen{
-    position: absolute;
-    top:0;
-    left:0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width:100%;
-    height: 100%;
-
-    & a.a-btn{
-        align-self: flex-start;
-        margin-top: 1rem;
-        background-color: rgba(206, 206, 218, 0.8);
-        padding: 0.3rem 1rem;
-        min-width: 4rem;
-        border-radius: 2rem;
-        text-align: center;
-    }
-}
-
-.play-box{
-    position: relative;
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .block-screen{
     @apply --block-screen;
 }
 
-.play-field{
-    position: relative;
-    width: 20rem;
-    height: 20rem;
-    padding: 0.8rem 0.5rem 0.5rem 0.6rem;
-    overflow: hidden;
-    background-color: black;
-    background-clip: content-box;
-    box-shadow: inset 0 0 0 1rem var(--main-color);
-}
 
-.play-field .cell{
-    display: inline-block;
-    position: relative;
-    width: 6rem;
-    height: 6rem;
-    margin-right: 0.3rem;
-    background: var(--main-color);
-    text-align: center;
-
-}
-
-
-.player1::before{
-    content: '';
-    position: absolute;
-    left:0.5rem;
-    top:0.5rem;
-    width:80%;
-    height:80%;
-    transform: scale(1);
-    background-image:
-            linear-gradient(to top right, transparent 47%, black 47%, black 53%, transparent 53% ),
-            linear-gradient(to bottom right, transparent 47%, black 47%, black 53%, transparent 53% );
-
-}
-
-.player2::before{
-    content: '';
-    position: absolute;
-    left:0.2rem;
-    top:0.2rem;
-    width:80%;
-    height:80%;
-    border: 0.4rem solid black;
-    border-radius: 50%;
-    transform: scale(1);
-}
-
-.player-turn-status{
-    height: 1.1rem;
-}
-
-.game-over-screen{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    @apply --block-screen;
-
-    & .game-result{
-        padding: 0 1rem;
-        font-size: 3rem;
-        font-weight: bold;
-        background: rgba(255, 255, 255, 0.7);
-        border-radius: 1rem;
-
-        &.red{
-            background: rgba(118, 20, 9, 0.73);
-        }
-        &.green{
-            background: rgba(112, 150, 129, 0.76);
-        }
-    }
-    & .resume-game-control{
-        position: relative;
-        height: 3rem;
-        margin-top: 2rem;
-
-        & a{
-
-        }
-    }
-
-    & .spinner{
-        display: block;
-        width: 2rem;
-        height: 2rem;
-        border: 0.4rem solid white;
-        @apply --spinner;
-    }
-}
-
-
-
-
-.info-screen{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    background: var(--main-color);
-    @apply --block-screen;
-
-    & .spinner{
-        border : 0.4rem solid black;
-        @apply --spinner;
-        width: 3rem;
-        height: 3rem;
-        margin-top: 2rem;
-    }
-
-    & .a-btn{
-        padding: 0.2rem 2rem;
-        margin-top: 2rem;
-        border-radius: 1rem;
-        background-color: rgba(206, 206, 218, 0.43);
-    }
-
-    & .game-request-manager-bar {
-        display: flex;
-        flex-direction: column;
-
-        & a{
-            cursor: pointer;
-            padding: 0.3rem 0.8rem;
-            margin-top: 1rem;
-            text-decoration: none;
-            border-radius: 1rem;
-        }
-    }
-}
 
 .hide{
     display: none !important;

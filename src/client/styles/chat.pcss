@@ -1,24 +1,24 @@
 .chat{
     position: relative;
-    width: 10rem;
-    height: 20rem ;
+    width: 12rem;
     display: flex;
     flex-direction: column;
 
     & .messages-wrapper{
+        height: 17rem;
         background: rgba(255, 255, 255, 0.4);
         border-radius: 0.5rem;
-        height: 15rem;
+        overflow: hidden;
 
         & .messages{
-            height: 15rem;
-            padding: 0.5rem;
-            overflow-y: hidden;
+            height: 100%;
+            padding: 0.5rem calc(83px + 0.5rem) 0.5rem 0.5rem;
+            margin-right: -100px;
+            overflow-y: scroll;
         }
     }
 
     & .message{
-        max-width: 15rem;
         white-space: pre-wrap;
 
         &.own{
@@ -36,19 +36,11 @@
     }
 
     & form {
-
+        flex-shrink: 0;
         display: flex;
         align-items: stretch;
         margin-top: 0.3rem;
-        width: 100%;
-        & .a-btn {
-            height: 2rem;
-            padding: auto;
-            margin-left: 0.1rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 0;
-        }
+
         & textarea {
             display: inline-block;
             background-color: rgba(206, 206, 218, 0.43);
