@@ -82,6 +82,7 @@ function addGameListeners(store){
         .on('exit game', reason => {
             console.log(reason);
             store.dispatch(actions.showInfo({infoType:'notification',infoText:reason, nextScreen: 'lobby'}));
+            setTimeout(()=>store.dispatch(actions.endGame()),2000);
         })
         .on('new chat message', message => {
             store.dispatch(actions.receiveMessage(message));

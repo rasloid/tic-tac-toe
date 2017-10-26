@@ -14,7 +14,7 @@ const redisOpts = require('../../redis.config');
 const servers = new ServersManager(redisOpts);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.hostencoded({extended: true}));
 
 servers.getServers()
     .then(servers=>{

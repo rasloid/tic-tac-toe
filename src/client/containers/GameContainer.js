@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     exitGame:() => {
         dispatch(changeScreen('lobby'));
-        dispatch(endGame());
+        setTimeout(() => dispatch(endGame()),2000);
     },
     onClickHandler:(index,playerNum) => {
         dispatch(playFieldUpdate(index, playerNum));

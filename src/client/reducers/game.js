@@ -5,7 +5,8 @@ import {
     PLAYFIELD_UPDATE,
     RESUME_GAME,
     RECEIVE_MESSAGE,
-    SEND_MESSAGE
+    SEND_MESSAGE,
+    END_GAME
 } from '../actions';
 
 const getChatState = (state=[],action) => {
@@ -79,6 +80,8 @@ const game = (state=initialState, action) => {
                     ...state,
                     resumeGameAccept: false
                 };
+          case END_GAME:
+              return initialState;
 
           default:
               return state;

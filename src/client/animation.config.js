@@ -1,6 +1,6 @@
 export const duration = 800;
 export const defaultStyle = {
-    transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out `,
+    transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ${duration}ms ease-in-out `,
     opacity: 0
 };
 export const transitionStyles = {
