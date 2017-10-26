@@ -58,12 +58,12 @@ class Chat extends  Component{
         }
         return(
             <div className='chat'>
-                <div className="messages">
-                    {messagesTemplate}
-                    <div style={{ float:'left', clear: 'both' }}
-                         ref={(el) => { this.messagesEnd = el}}>
+                    <div className="messages-wrapper">
+                        <div className='messages'>{messagesTemplate}</div>
+                        <div style={{ float:'left', clear: 'both' }}
+                             ref={(el) => { this.messagesEnd = el}}>
+                        </div>
                     </div>
-                </div>
                 <form
                     onSubmit={this.onSubmitHandler.bind(this)}
                     ref={(el) => { this.form = el}}>

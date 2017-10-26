@@ -70,7 +70,7 @@ module.exports = (address, port, redisOptions) => {
             .join('authorized_users_room')
             .emit('set nickname status', true)
             .on('disconnect', () => {
-                users.removeUser(userNickname);
+                users.removeUser(userNickname).catch(console.log);
             });
         return enterPlayGround(userNickname, socket);
     }
@@ -108,12 +108,13 @@ module.exports = (address, port, redisOptions) => {
         let aliveServers = await servers.getServers();
 
         if(aliveServers.indexOf(opponentUserData.serverName) == -1){
-            if(attemptsCount > 3){
+            if(attemptsCount > 5){
                 await users.removeUser(opponentNickname);
+                socket.emit('exit game', `${opponentNickname} has been disconnected`);
                 await endGame(nickname, socket, gameId);
                 return enterPlayGround(nickname, socket);
             }
-            return setTimeout(()=>{restoreGame(userData, socket, ++attemptsCount).catch(console.log)},2000);
+            return setTimeout(()=>{restoreGame(userData, socket, ++attemptsCount).catch(console.log)},5000);
         }
 
         let opponentSocketId = opponentUserData.socketId;

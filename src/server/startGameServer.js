@@ -5,7 +5,7 @@ const gameServer = require('./GameServer');
 let password = args['pass'] || 'secret';
 let serviceRegistry = args['sr'] || 'http://192.168.1.5:3005';
 let registrationUrl = `${serviceRegistry}/registrate-game-server`;
-let host = args['host'] || 'localhost';
+let host = args['host'] || '192.168.1.5';
 let port = process.env.PORT || args['port'] || 3000;
 
 let body = JSON.stringify({

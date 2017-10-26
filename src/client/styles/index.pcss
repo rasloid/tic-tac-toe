@@ -1,3 +1,5 @@
+@import './chat.pcss';
+
 :root{
     --main-color: #57576a;
     --spinner: {
@@ -298,65 +300,7 @@ a.a-btn{
 }
 
 
-.chat{
-    & .messages{
-        min-width: 12rem;
-        height: 17rem ;
-        padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.4);
-        border-radius: 0.5rem;
-        overflow: hidden;
-    }
 
-    & .message{
-        max-width: 15rem;
-        white-space: pre-wrap;
-
-        &.own{
-            text-align: right;
-        }
-
-        & .text{
-            padding: 0 0.5rem;
-        }
-    }
-
-    & .author{
-        font-weight: bold;
-        font-size: 1.3rem;
-    }
-
-    & form {
-        display: flex;
-        align-items: stretch;
-        margin-top: 0.3rem;
-        & .a-btn {
-            height: 2rem;
-            padding: auto;
-            margin-left: 0.1rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 0;
-        }
-        & textarea {
-            display: inline-block;
-            background-color: rgba(206, 206, 218, 0.43);
-            width: 100%;
-            padding: 0.3rem;
-            resize: none;
-            border: none;
-            border-radius: 0.5rem;
-            white-space: pre-wrap;
-            overflow: hidden;
-            box-sizing: content-box;
-            font-size: 1rem;
-
-            &:focus{
-                outline:none;
-            }
-        }
-    }
-}
 
 .info-screen{
     display: flex;
@@ -385,6 +329,7 @@ a.a-btn{
     & .game-request-manager-bar {
         display: flex;
         flex-direction: column;
+
         & a{
             cursor: pointer;
             padding: 0.3rem 0.8rem;

@@ -20,8 +20,8 @@ function connectToGameServer(store){
             }
             socket = io(data.host,{
                 autoConnect:false,
-                reconnectionAttempts:4,
-                reconnectionDelay: 1000
+                reconnectionAttempts:2,
+                reconnectionDelay: 500
             });
             socket
                 .on('connect',()=>{
@@ -42,6 +42,7 @@ function connectToGameServer(store){
                         infoText:'Connection lost. Trying to reconnect'}));
                 })
                 .on('reconnect_failed', () => {
+                    console.log('reconnect_failed');
                     return connectToGameServer(store);
                 })
                 .open();
@@ -68,7 +69,6 @@ function addGameListeners(store){
             store.dispatch(actions.usersListUpdate(users));
         })
         .on('game request', opponent =>{
-            console.log('game request event');
             store.dispatch(actions.receiveRequest(opponent));
         })
         .on('game start', data =>{
@@ -80,7 +80,6 @@ function addGameListeners(store){
             store.dispatch(actions.gameUpdate(data));
         })
         .on('exit game', reason => {
-            console.log(reason);
             store.dispatch(actions.showInfo({infoType:'notification',infoText:reason, nextScreen: 'lobby'}));
             setTimeout(()=>store.dispatch(actions.endGame()),2000);
         })
@@ -100,6 +99,7 @@ function addGameListeners(store){
             store.dispatch(actions.expireRequest());
         })
         .on('reconnection_fail',() => {
+            console.log('reconnection_fail');
             store.dispatch(actions.changeScreen('login'));
         });
 }
@@ -128,7 +128,6 @@ export const socketApiMiddleware = (store) => next => action =>{
             socket.emit('game update', action.data);
             break;
         case actions.SEND_MESSAGE:
-            console.log(action.message);
             socket.emit('new chat message', action.message);
             break;
         case actions.RESUME_GAME_ACCEPT:

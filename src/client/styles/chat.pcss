@@ -1,0 +1,69 @@
+.chat{
+    position: relative;
+    width: 10rem;
+    height: 20rem ;
+    display: flex;
+    flex-direction: column;
+
+    & .messages-wrapper{
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 0.5rem;
+        height: 15rem;
+
+        & .messages{
+            height: 15rem;
+            padding: 0.5rem;
+            overflow-y: hidden;
+        }
+    }
+
+    & .message{
+        max-width: 15rem;
+        white-space: pre-wrap;
+
+        &.own{
+            text-align: right;
+        }
+
+        & .text{
+            padding: 0 0.5rem;
+        }
+    }
+
+    & .author{
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+
+    & form {
+
+        display: flex;
+        align-items: stretch;
+        margin-top: 0.3rem;
+        width: 100%;
+        & .a-btn {
+            height: 2rem;
+            padding: auto;
+            margin-left: 0.1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 0;
+        }
+        & textarea {
+            display: inline-block;
+            background-color: rgba(206, 206, 218, 0.43);
+            padding: 0.3rem;
+            resize: none;
+            border: none;
+            border-radius: 0.5rem;
+            white-space: pre-wrap;
+            overflow: hidden;
+            box-sizing: content-box;
+            font-size: 1rem;
+
+            &:focus{
+                outline:none;
+            }
+        }
+    }
+}
