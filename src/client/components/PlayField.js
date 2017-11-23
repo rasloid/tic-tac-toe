@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import PlayFieldCell from './PlayFieldCell';
-import  uuidv4 from 'uuid/v4';
 
 class PlayField extends Component{
     constructor(props){
@@ -19,12 +18,12 @@ class PlayField extends Component{
                     <PlayFieldCell
                         cellState={playFieldState[j]}
                         index={j}
-                        key={uuidv4()}
+                        key={`playfieldcell${j}`}
                         playerNum={playerNum}
                         {...props}
                     />);
             }
-            playFieldTemplate.push(<br key={uuidv4()}/>);
+            playFieldTemplate.push(<br key={`br${i}`}/>);
         }
 
         return (

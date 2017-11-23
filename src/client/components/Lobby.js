@@ -8,7 +8,7 @@ const Lobby = ({ownNickname,screen,...props}) => (
     <Transition in={screen == 'lobby'} timeout={duration}>
         {state => (
             <div className='lobby' style={{...defaultStyle, ...transitionStyles[state]}}>
-                <div><h3> Nickname:{ownNickname}</h3></div>
+                <div><h2> Login:{ownNickname}</h2></div>
                 <UsersList ownNickname={ownNickname} {...props}/>
             </div>
         )}

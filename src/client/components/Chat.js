@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import ChatMessage from '../Components/ChatMessage';
-import uuidv4 from 'uuid/v4';
 
 class Chat extends  Component{
 
@@ -52,7 +51,7 @@ class Chat extends  Component{
                     author = {author}
                     text = {messages[i].text}
                     isOwn = {isOwn}
-                    key = {uuidv4()}
+                    key = {i}
                 />
             );
         }

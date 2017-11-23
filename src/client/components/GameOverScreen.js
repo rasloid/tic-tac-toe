@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import classNames from 'classnames';
 
-const GameOverScreen = ({player,draw,winner, resumeGameAccept,resumeGameHandler}) => {
+const GameOverScreen = ({player,draw,winner, resumeGameAccept,resumeGameHandler, style}) => {
 
     let customClass = classNames({
         'game-result':true,
@@ -11,7 +11,7 @@ const GameOverScreen = ({player,draw,winner, resumeGameAccept,resumeGameHandler}
     });
 
     return(
-        <div className={'game-over-screen'}>
+        <div className={'game-over-screen'} style={style}>
             <div className={customClass}>
             {draw
                 ? 'Draw'

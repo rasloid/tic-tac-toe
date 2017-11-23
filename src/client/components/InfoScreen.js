@@ -1,12 +1,10 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Transition } from 'react-transition-group';
 import{duration, defaultStyle, transitionStyles } from '../animation.config';
 
 const InfoScreen = ({screen,infoType, infoText, onClickHandler, sendResponse}) => {
     let customClass = classNames({
-        //'hide': !info,
         'info-screen': true,
         'alert': infoType == 'alert',
         'waiting': infoType == 'waiting'
