@@ -14,7 +14,7 @@ const redisOpts = require('../../redis.config');
 const servers = new ServersManager(redisOpts);
 
 app.use(bodyParser.json());
-app.use(bodyParser.hostencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 servers.getServers()
     .then(servers=>{
@@ -43,6 +43,16 @@ app.post('/registrate-game-server', (req, res) => {
         })
         .catch(console.log);
 });
+
+
+server.listen(port, error => {
+    if (error) {
+        console.error(error)
+    } else {
+        console.info("==> 🌎  Service registry has been started. Listening on port %s.", port)
+    }
+});
+
 
 function startPolling(host){
     let timer = setInterval(()=>{
@@ -73,11 +83,3 @@ async function connectErrorHandler(timer,host){
     const serversList = await servers.getServers();
     console.log('Available servers', serversList);
 }
-
-server.listen(port, error => {
-    if (error) {
-        console.error(error)
-    } else {
-        console.info("==> 🌎  Service registry has been started. Listening on port %s.", port)
-    }
-});

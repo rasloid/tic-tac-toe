@@ -103,11 +103,11 @@ module.exports = (address, port, redisOptions) => {
     async function restoreGame(userData, socket, attemptsCount){
         let {nickname, gameId, opponentNickname} = userData;
         let game = await games.getGameData(gameId);
-        let playerNum = game.player1 == nickname ? 1 : 2;
+        let playerNum = game.player1 === nickname ? 1 : 2;
         let opponentUserData = await users.getUserData(opponentNickname);
         let aliveServers = await servers.getServers();
 
-        if(aliveServers.indexOf(opponentUserData.serverName) == -1){
+        if(aliveServers.indexOf(opponentUserData.serverName) === -1){
             if(attemptsCount > 5){
                 await users.removeUser(opponentNickname);
                 socket.emit('exit game', `${opponentNickname} has been disconnected`);
@@ -311,7 +311,7 @@ module.exports = (address, port, redisOptions) => {
             });
             sub.once('message', (channel, msg) => {
                 const data = JSON.parse(msg);
-                if (channel == sockets[0].id && data.event == 'exit game') {
+                if (channel === sockets[0].id && data.event === 'exit game') {
                     res(roomId);
                 }
             })
