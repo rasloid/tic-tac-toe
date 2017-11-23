@@ -53,30 +53,28 @@
 }
 
 
-.player1::before{
+.player1 .mark{
     content: '';
     position: absolute;
     left:0.5rem;
     top:0.5rem;
     width:80%;
     height:80%;
-    transform: scale(1);
     background-image:
             linear-gradient(to top right, transparent 47%, black 47%, black 53%, transparent 53% ),
             linear-gradient(to bottom right, transparent 47%, black 47%, black 53%, transparent 53% );
 
 }
 
-.player2::before{
+.player2 .mark{
     content: '';
     position: absolute;
-    left:0.2rem;
-    top:0.2rem;
-    width:80%;
-    height:80%;
+    left:0.4rem;
+    top:0.4rem;
+    width:85%;
+    height:85%;
     border: 0.4rem solid black;
     border-radius: 50%;
-    transform: scale(1);
 }
 
 .player-turn-status{
