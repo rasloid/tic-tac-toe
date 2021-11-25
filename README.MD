@@ -5,4 +5,3 @@ socket.io, redis, node.js application scalling, pub/sub pattern.
 
 You can open this demo https://young-mesa-46700.herokuapp.com in separate tabs.
 
-Hasn't finished yet.
